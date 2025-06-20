@@ -1,0 +1,74 @@
+{
+  "brands": [
+    "Air King"
+  ],
+  "description": "Air King 4-inch diameter ventilation fan for attics or crawl spaces. Designed for continuous operation.  Durable construction.  Includes mounting brackets.",
+  "attributes": {
+    "diameter": {
+      "text": [
+        "4 inch"
+      ]
+    },
+    "power": {
+      "text": [
+        "50 CFM"
+      ]
+    },
+    "mounting": {
+      "text": [
+        "Wall"
+      ]
+    },
+    "material": {
+      "text": [
+        "Metal"
+      ]
+    },
+    "use": {
+      "text": [
+        "Attic, Crawl Space"
+      ]
+    },
+    "noiselevel": {
+      "text": [
+        "N/A"
+      ]
+    },
+    "features": {
+      "text": [
+        "N/A"
+      ]
+    },
+    "document_type": {
+      "text": [
+        "product"
+      ]
+    },
+    "tenant": {
+      "text": [
+        "conversational_demo"
+      ]
+    }
+  },
+  "id": "241518ec-62d0-4a69-81c4-bd2196d34d1a",
+  "categories": [
+    "Home Improvement > Plumbing > Ventilation"
+  ],
+  "title": "Air King 4-inch Attic Ventilation Fan",
+  "priceInfo": {
+    "cost": 25.0,
+    "originalPrice": 30.0,
+    "price": 25.0,
+    "currencyCode": "USD"
+  },
+  "name": "projects/gd-gcp-rnd-concept-search/locations/global/catalogs/default_catalog/branches/2/products/241518ec-62d0-4a69-81c4-bd2196d34d1a",
+  "availableTime": "2023-02-01T00:00:00.000000Z",
+  "uri": "https://searchui.sandbox.gd-search.griddynamics.net/items/241518ec-62d0-4a69-81c4-bd2196d34d1a?tenant=conversational_demo",
+  "images": [
+    {
+      "uri": "https://storage.googleapis.com/atlanta-demo-storage/product-images/241518ec-62d0-4a69-81c4-bd2196d34d1a.png",
+      "height": 768,
+      "width": 1408
+    }
+  ]
+}
