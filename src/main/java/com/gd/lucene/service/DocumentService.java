@@ -53,10 +53,6 @@ public class DocumentService {
 
     public SearchResponse update(String uuid, DocumentUpdateRequestBody updateRequestBody) throws Exception {
 
-        if (!exists(uuid)) {
-            throw new Exception("Document not found: id = " + uuid);
-        }
-
         IndexWriter indexWriter = indexService.getOrCreateIndexWriter();
 
         HomeAppliance homeAppliance = mapToHomeAppliance(uuid, updateRequestBody);

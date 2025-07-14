@@ -1,7 +1,6 @@
 # Mini-search Lucene
 
-This project uses Quarkus, Lucene
-and combinatoricslib3 (for Permutations ) <https://github.com/dpaukov/combinatoricslib3>
+This project uses Quarkus and Lucene v9.12.1
 
 ## 'Software engineer to Search engineer' course.
 
@@ -11,37 +10,14 @@ and combinatoricslib3 (for Permutations ) <https://github.com/dpaukov/combinator
  ./mvnw clean test
 ```
 
-## Run main class:
-
-```shell
- ./mvnw quarkus:run
-```
-
-## Open <http://localhost:8080/q/swagger-ui/>
 
 ---
-### Packaging the application
-
-The application can be packaged using:
-
-```shell
- ./mvnw package
-```
+### Run quarkus application
 
 
 ```shell
- DOCKER_DEFAULT_PLATFORM="linux/amd64"  \
- docker build -f src/main/Docker/Dockerfile.jvm \
- -t europe-west6-docker.pkg.dev/gd-gcp-em-search-re-training/trainingartifacts/zlj-lucene-mini_search:0.1 .
+./mvnw clean package quarkus:run
 ```
-
-```shell
- docker run -i --rm -p 8080:8080 \
- europe-west6-docker.pkg.dev/gd-gcp-em-search-re-training/trainingartifacts/zlj-lucene-mini_search:0.1
-```
-
-
-
 ## Open [http://localhost:8080/q/swagger-ui/](http://localhost:8080/q/swagger-ui/)
 
 ---
@@ -58,10 +34,15 @@ The application can be packaged using:
  gcloud auth configure-docker europe-west6-docker.pkg.dev
 ```
 ```shell
+ DOCKER_DEFAULT_PLATFORM="linux/amd64"  \
+ docker build -f src/main/Docker/Dockerfile.jvm \
+ -t europe-west6-docker.pkg.dev/gd-gcp-em-search-re-training/trainingartifacts/zlj-lucene-mini_search:0.1 .
+```
+```shell
  docker push \
  europe-west6-docker.pkg.dev/gd-gcp-em-search-re-training/trainingartifacts/zlj-lucene-mini_search:0.1
 ```
-
+Create CloudRun on GCP console and deploy !
 
 # Open <https://zlj-lucene-mini-search-gixfoxo4pq-ew.a.run.app/q/swagger-ui/>
 
