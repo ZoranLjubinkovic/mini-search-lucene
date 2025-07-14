@@ -1,32 +1,43 @@
 package com.gd.lucene.model;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.DoubleField;
+import org.apache.lucene.document.DoublePoint;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.SortedNumericDocValuesField;
+import org.apache.lucene.document.StoredField;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "brands",
-        "description",
-        "attributes",
-        "id",
-        "categories",
-        "title",
-        "priceInfo",
-        "name",
-        "availableTime",
-        "uri",
-        "images"
-})
 // @Generated("jsonschema2pojo")
 public class HomeAppliance {
+
+
+    public static final String fieldId = "id";
+
+    public static final String fieldDescription = "description";
+
+    public static final String fieldTitle = "title";
+
+    public static final String fieldBrands = "brands";
+
+    public static final String fieldCategories = "categories";
+
+    public static final String fieldImageUri = "imageUri";
+
+    public static final String fieldPrice = "price";
+
+    public static final String fieldColor = "color";
 
 
     @JsonProperty("id")
@@ -47,46 +58,15 @@ public class HomeAppliance {
     @JsonProperty("attributes")
     private Attributes attributes;
 
-
     @JsonProperty("priceInfo")
     private PriceInfo priceInfo;
-
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("availableTime")
-    private String availableTime;
-    //    private OffsetDateTime availableTime;
-
-    @JsonProperty("uri")
-    private String uri;
 
     @JsonProperty("images")
     private List<Image> images;
 
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<>();
-
-    /**
-     * No args constructor for use in serialization
-     */
     public HomeAppliance() {
     }
 
-    public HomeAppliance(List<String> brands, String description, Attributes attributes, String id, List<String> categories, String title, PriceInfo priceInfo, String name, String availableTime, String uri, List<Image> images) {
-        super();
-        this.brands = brands;
-        this.description = description;
-        this.attributes = attributes;
-        this.id = id;
-        this.categories = categories;
-        this.title = title;
-        this.priceInfo = priceInfo;
-        this.name = name;
-        this.availableTime = availableTime;
-        this.uri = uri;
-        this.images = images;
-    }
 
     @JsonProperty("brands")
     public List<String> getBrands() {
@@ -106,16 +86,6 @@ public class HomeAppliance {
     @JsonProperty("description")
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @JsonProperty("attributes")
-    public Attributes getAttributes() {
-        return attributes;
-    }
-
-    @JsonProperty("attributes")
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
     }
 
     @JsonProperty("id")
@@ -158,35 +128,6 @@ public class HomeAppliance {
         this.priceInfo = priceInfo;
     }
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
-
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @JsonProperty("availableTime")
-    public String getAvailableTime() {
-        return availableTime;
-    }
-
-    @JsonProperty("availableTime")
-    public void setAvailableTime(String availableTime) {
-        this.availableTime = availableTime;
-    }
-
-    @JsonProperty("uri")
-    public String getUri() {
-        return uri;
-    }
-
-    @JsonProperty("uri")
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
 
     @JsonProperty("images")
     public List<Image> getImages() {
@@ -198,22 +139,96 @@ public class HomeAppliance {
         this.images = images;
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+
+    public Attributes getAttributes() {
+        return attributes;
     }
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
     }
 
+    public Document toDocument() {
 
-    @Override
-    public String toString() {
-        return "HomeAppliance{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                '}';
+        final Document document = new Document();
+
+        if (getId() != null) {
+            document.add(new StringField(fieldId, getId(), Field.Store.YES));
+        }
+
+        if (getTitle() != null) {
+            document.add(new TextField(fieldTitle, getTitle(), Field.Store.YES));
+        }
+        if (getDescription() != null) {
+            document.add(new TextField(fieldDescription, getDescription(), Field.Store.YES));
+        }
+
+        List<String> brandList = getBrands();
+        if (brandList != null && !brandList.isEmpty()) {
+            for (String b : brandList) {
+                document.add(new TextField(fieldBrands, b, Field.Store.YES));
+            }
+        }
+        List<String> categoryList = getCategories();
+        if (categoryList != null && !categoryList.isEmpty()) {
+            for (String c : categoryList) {
+                document.add(new TextField(fieldCategories, c, Field.Store.YES));
+            }
+        }
+
+        String imageUri = getImageUri();
+        if (imageUri != null && !imageUri.isEmpty()) {
+            document.add(new StoredField(fieldImageUri, imageUri));
+        }
+
+        for (String color : getColorList()) {
+            document.add(new TextField(fieldColor, color, Field.Store.YES));
+        }
+
+        Double price = getPrice();
+        if (price != null) {
+            document.add(new DoubleField(fieldPrice, price, Field.Store.YES));
+            document.add(new DoublePoint(fieldPrice, price));
+            long value = Double.doubleToRawLongBits(price);
+            document.add(new SortedNumericDocValuesField(fieldPrice, value));
+        }
+
+        return document;
+    }
+
+    public String getImageUri() {
+        List<Image> images = getImages();
+        if (images != null && !images.isEmpty()) {
+            // one picture == 1_000 words ;)
+            Image image = images.get(0);
+            if (image != null) {
+                return image.getUri();
+            }
+        }
+        return null;
+    }
+
+    public Double getPrice() {
+
+        PriceInfo priceInfo = getPriceInfo();
+        if (priceInfo != null) {
+            Double price = priceInfo.getPrice();
+
+            if (price == null) {
+                price = priceInfo.getOriginalPrice();
+            }
+            if (price != null) {
+                return price; //(document, price);
+            } else {
+                System.err.println("Price info is null: " + getId());
+            }
+        }
+        return null;
+    }
+
+    public List<String> getColorList() {
+        return Optional.ofNullable(getAttributes())
+                .flatMap(attributes -> Optional.ofNullable(attributes.getColor()))
+                .map(color -> color.getText()).orElse(List.of());
     }
 }

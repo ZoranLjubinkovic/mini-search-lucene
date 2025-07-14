@@ -1,9 +1,9 @@
-package com.gd.lucene.endpoint;
+package com.gd.lucene.api;
 
-import com.gd.lucene.endpoint.io.SearchResponse;
-import com.gd.lucene.endpoint.io.SearchResponses;
+import com.gd.lucene.api.exchange.SearchResponse;
+import com.gd.lucene.api.exchange.SearchResponses;
 import com.gd.lucene.model.DocumentUpdateRequestBody;
-import com.gd.lucene.service.LuceneService;
+import com.gd.lucene.service.DocumentService;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,24 +24,24 @@ import org.jboss.logging.Logger;
 public class DocumentResource {
 
     @Inject
-    Logger log;
+    private Logger logger;
 
 
     @Inject
-    LuceneService luceneService;
+    private DocumentService documentService;
 
     @Operation(summary = "", description = "")
     @PUT
     @Path("/{uuid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateDoc(@PathParam("uuid") @NotNull @io.smallrye.common.constraint.NotNull @NotEmpty @NotBlank @UUID String uuid, @RequestBody DocumentUpdateRequestBody documentUpdateRequestBody) throws Exception {
+    public Response update(@PathParam("uuid") @NotNull @io.smallrye.common.constraint.NotNull @NotEmpty @NotBlank @UUID String uuid, @RequestBody DocumentUpdateRequestBody documentUpdateRequestBody) throws Exception {
 
         try {
-            SearchResponse searchResponse = luceneService.update(uuid, documentUpdateRequestBody);
-            log.info("searchResponse: " + searchResponse);
+            SearchResponse searchResponse = documentService.update(uuid, documentUpdateRequestBody);
+            logger.info("searchResponse: " + searchResponse);
             return Response.ok().entity(searchResponse).build();
         } catch (Throwable e) {
-            log.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
             return Response.serverError().entity(new SearchResponses(e.getMessage())).build();
         }
     }
@@ -49,12 +49,12 @@ public class DocumentResource {
 
     @DELETE
     @Path("/{uuid}")
-    public Response deleteDoc(@PathParam("uuid") @NotNull @io.smallrye.common.constraint.NotNull @NotEmpty @NotBlank @UUID String uuid) {
+    public Response delete(@PathParam("uuid") @NotNull @io.smallrye.common.constraint.NotNull @NotEmpty @NotBlank @UUID String uuid) {
         try {
-            luceneService.delete(uuid);
+            documentService.delete(uuid);
             return Response.noContent().build();
         } catch (Throwable e) {
-            log.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
             return Response.serverError().entity(new SearchResponses(e.getMessage())).build();
         }
     }

@@ -1,8 +1,8 @@
-package com.gd.lucene.endpoint.io;
+package com.gd.lucene.api.exchange;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Set;
+import java.util.List;
 
 public class SearchResponse {
 
@@ -16,10 +16,10 @@ public class SearchResponse {
     private String description;
 
     @JsonProperty("brands")
-    private Set<String> brands;
+    private List<String> brands;
 
     @JsonProperty("categories")
-    private Set<String> categories;
+    private List<String> categories;
 
     @JsonProperty("price")
     private Double price;
@@ -28,20 +28,15 @@ public class SearchResponse {
     @JsonProperty("imageUri")
     private String imageUri;
 
+    @JsonProperty("color")
+    private String color;
 
-    public SearchResponse(String id, String title, String description, Set<String> brands, Set<String> categories, Double price, String imageUri) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.brands = brands;
-        this.categories = categories;
-        this.price = price;
-        this.imageUri = imageUri;
-    }
+    @JsonProperty("score")
+    private float score;
+
 
     public SearchResponse() {
     }
-
 
     public String getDescription() {
         return description;
@@ -59,19 +54,19 @@ public class SearchResponse {
         this.id = id;
     }
 
-    public Set<String> getBrands() {
+    public List<String> getBrands() {
         return brands;
     }
 
-    public void setBrands(Set<String> brands) {
+    public void setBrands(List<String> brands) {
         this.brands = brands;
     }
 
-    public Set<String> getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<String> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
@@ -91,7 +86,6 @@ public class SearchResponse {
         this.price = price;
     }
 
-
     public String getImageUri() {
         return imageUri;
     }
@@ -100,16 +94,20 @@ public class SearchResponse {
         this.imageUri = imageUri;
     }
 
-    @Override
-    public String toString() {
-        return "SearchResponse{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", brands=" + brands +
-                ", categories=" + categories +
-                ", price=" + price +
-                ", imageUri='" + imageUri + '\'' +
-                '}';
+    public float getScore() {
+        return score;
     }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
 }

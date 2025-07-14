@@ -54,4 +54,11 @@ public class Color {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "Color{" +
+                "text=" + text +
+                " : " + (text == null ? 0 : text.size()) +
+                '}';
+    }
 }

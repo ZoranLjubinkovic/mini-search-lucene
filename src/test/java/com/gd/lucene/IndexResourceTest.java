@@ -1,7 +1,7 @@
 package com.gd.lucene;
 
-import com.gd.lucene.endpoint.io.CreateIndexResponse;
-import com.gd.lucene.endpoint.io.SearchResponses;
+import com.gd.lucene.api.exchange.LoadToIndexResult;
+import com.gd.lucene.api.exchange.SearchResponses;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
-class IndexerResourceTest {
+class IndexResourceTest {
 
     @Inject
     Logger log;
@@ -18,16 +18,16 @@ class IndexerResourceTest {
     @Test
     void testCreateIndexEndpoint() {
 
-        CreateIndexResponse createIndexResponse =
+        LoadToIndexResult loadToIndexResult =
                 given().when()
                         .post("/index")
                         .then().statusCode(200)
                         .extract()
                         .body()
-                        .as(CreateIndexResponse.class);
+                        .as(LoadToIndexResult.class);
 
-        int indexed = createIndexResponse.indexed();
-        int loaded = createIndexResponse.loaded();
+        int indexed = loadToIndexResult.indexed();
+        int loaded = loadToIndexResult.loaded();
 
         assert indexed == loaded;
 
@@ -42,7 +42,7 @@ class IndexerResourceTest {
         long found = searchResponses.getFound();
         long size = searchResponses.getSearchResponses().size();
         assert found == loaded;
-        assert size == 10;
+        assert size == 450;
     }
 
 }

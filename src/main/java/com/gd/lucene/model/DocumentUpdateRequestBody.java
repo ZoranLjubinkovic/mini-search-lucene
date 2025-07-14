@@ -3,7 +3,7 @@ package com.gd.lucene.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Set;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DocumentUpdateRequestBody {
@@ -18,18 +18,20 @@ public class DocumentUpdateRequestBody {
     private String description;
 
     @JsonProperty("brands")
-    private Set<String> brands;
+    private List<String> brands;
 
     @JsonProperty("categories")
-    private Set<String> categories;
+    private List<String> categories;
 
 
     @JsonProperty("price")
     private Double price;
 
-
     @JsonProperty("imageUri")
     private String imageUri;
+
+    @JsonProperty("color")
+    private String color;
 
     public String getTitle() {
         return title;
@@ -47,19 +49,19 @@ public class DocumentUpdateRequestBody {
         this.description = description;
     }
 
-    public Set<String> getBrands() {
+    public List<String> getBrands() {
         return brands;
     }
 
-    public void setBrands(Set<String> brands) {
+    public void setBrands(List<String> brands) {
         this.brands = brands;
     }
 
-    public Set<String> getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<String> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
@@ -77,5 +79,13 @@ public class DocumentUpdateRequestBody {
 
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

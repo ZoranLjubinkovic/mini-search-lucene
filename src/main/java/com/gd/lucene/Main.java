@@ -1,8 +1,11 @@
 package com.gd.lucene;
 
 
-import com.gd.lucene.endpoint.io.CreateIndexResponse;
-import com.gd.lucene.service.Indexer;
+//import com.gd.lucene.service.Indexer;
+//import com.gd.lucene.service.LuceneIndexService;
+
+import com.gd.lucene.api.exchange.LoadToIndexResult;
+import com.gd.lucene.service.IndexService;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.Shutdown;
 import io.quarkus.runtime.ShutdownEvent;
@@ -16,10 +19,12 @@ import org.jboss.logging.Logger;
 public class Main {
 
     @Inject
-    Logger log;
+    private Logger logger;
+
 
     @Inject
-    Indexer indexer;
+    private IndexService indexService;
+
 
     public static void main(String... args) {
         Quarkus.run(args);
@@ -27,25 +32,23 @@ public class Main {
 
     void onStart(@Observes StartupEvent ev) {
         try {
-            CreateIndexResponse createIndexResponse = indexer.initLoading();
-            System.out.println("Loaded: " + createIndexResponse);
-
-//            uniqueCategories.forEach(uniqueCategory -> System.out.println("\t->" + uniqueCategory + "<-") );
+            System.out.println("Loading...");
+            LoadToIndexResult loadToIndexResult = indexService.loadDataIntoIndex();
+            System.out.println("loadToIndexResult: " + loadToIndexResult);
 
         } catch (Exception e) {
-            log.error("Error loadIntoIndex : " + e.getMessage());
-            throw new RuntimeException(e);
+            logger.error("Error loadIntoIndex : " + e.getMessage());
         }
     }
 
     void onStop(@Observes ShutdownEvent ev) {
-        log.info("The application is stopping...");
+        logger.info("The application is stopping...");
     }
 
 
     @Shutdown
     void shutdown() {
-        log.info("The application is shutdown...");
+        logger.info("The application is shutdown...");
 
     }
 

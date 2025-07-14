@@ -1,12 +1,10 @@
 package com.gd.lucene;
 
-import com.gd.lucene.endpoint.io.CreateIndexResponse;
-import com.gd.lucene.endpoint.io.SearchResponse;
-import com.gd.lucene.endpoint.io.SearchResponses;
+import com.gd.lucene.api.exchange.SearchResponse;
+import com.gd.lucene.api.exchange.SearchResponses;
 import com.gd.lucene.model.DocumentUpdateRequestBody;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
-import io.restassured.response.ValidatableResponse;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
 import org.junit.jupiter.api.Test;
