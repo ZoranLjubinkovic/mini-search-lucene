@@ -5,8 +5,6 @@ and combinatoricslib3 (for Permutations ) <https://github.com/dpaukov/combinator
 
 ## 'Software engineer to Search engineer' course.
 
-     * Query for search in fields: Title, Description, Brands, Categories, Color
-     * 
 ## All tests:
 
 ```shell
